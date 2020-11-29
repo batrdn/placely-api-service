@@ -12,8 +12,10 @@ import resolvers from './resolver/resolvers';
 import schemas from './schema/schemas';
 import {uploadFurnitureImage} from './usecase/uploadFurnitureImage';
 import {fetchImage} from './usecase/fetchImage';
+import {upload3DModel} from './usecase/upload3DModel';
 
 const GridFsStorage = require('multer-gridfs-storage');
+const cors = require('cors');
 const connection = mongoose.createConnection(env.mongoUri);
 
 mongoose.connect(env.mongoUri, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -49,6 +51,7 @@ const storage = new GridFsStorage({
 const schema: GraphQLSchema = mergeSchemas({schemas, resolvers});
 
 const app = express();
+app.use(cors());
 
 const startServer = async () => {
   const server = new ApolloServer({schema, context: ({req, res}): any => ({req, res})});
@@ -57,6 +60,7 @@ const startServer = async () => {
   const upload = multer({ storage });
 
   app.post('/placely/upload-furniture-image', upload.single('image'), uploadFurnitureImage);
+  app.post('/placely/upload-3d-model', upload.single('model'), upload3DModel);
   app.get('/placely/images/:imageName', fetchImage);
 
   app.listen({port: 4000}, () => console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));

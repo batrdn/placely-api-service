@@ -1,7 +1,7 @@
 import MongoFurniture, {IFurniture} from '../mongo/mongoFurniture';
 
-export const listFurnitureByType = async (parent: any, args: any) => {
-  return MongoFurniture.find({type: args.type}).then((furnitureList: IFurniture[] | null) => {
+export const listAllByPublishStatus = async (parent: any, args: any) => {
+  return MongoFurniture.find({isPublished: args.isPublished}).then((furnitureList: IFurniture[] | null) => {
     if (furnitureList) {
       const result = [];
 
@@ -10,6 +10,9 @@ export const listFurnitureByType = async (parent: any, args: any) => {
           id: furniture._id,
           name: furniture.name,
           type: furniture.type,
+          price: furniture.price,
+          code: furniture.code,
+          count: furniture.count,
           isPublished: furniture.isPublished,
           image: furniture.image,
           description: furniture.description,

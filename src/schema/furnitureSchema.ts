@@ -15,21 +15,26 @@ const furnitureSchema: GraphQLSchema = makeExecutableSchema({
       id: String!
       name: String!
       type: FurnitureType!
-      image: String!
+      price: Float!
+      count: Int!
+      code: String!
       isPublished: Boolean!  
       description: String
-      model: String
+      image: String
+      models: [String]
     }
     
     type Query {
       listAll: [Furniture]!
+      listAllByPublishStatus(isPublished: Boolean!): [Furniture]!
       listFurnitureByType(type: FurnitureType!): [Furniture]!
       getFurnitureById(id: String!): Furniture!
     }
     
     type Mutation {
-      createFurniture(name: String!, type: FurnitureType!, image: String!, description: String): Furniture!
+      createFurniture(name: String!, type: FurnitureType!, code: String!, price: Float!, count: Int!, description: String): Furniture!
       updateFurniture(id: String!, name: String!, type: FurnitureType!, image: String !, description: String): Furniture!
+      publish(id: String!, image: String!, models: [String]!): Boolean!
       deleteFurniture(id: String!): Boolean!
     }
   `

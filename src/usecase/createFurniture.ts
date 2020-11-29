@@ -5,7 +5,9 @@ export const createFurniture = async (parent: any, args: any) => {
   const newFurniture: IFurniture = new MongoFurniture({
     name: args.name,
     type: map(args.type),
-    image: args.image,
+    price: args.price,
+    code: args.code,
+    count: args.count,
     isPublished: false,
     description: args.description
   });
@@ -16,10 +18,12 @@ export const createFurniture = async (parent: any, args: any) => {
         id: furniture._id,
         name: furniture.name,
         type: furniture.type,
-        image: furniture.image,
+        code: furniture.code,
+        count: furniture.count,
+        price: furniture.price,
         isPublished: furniture.isPublished,
         description: furniture.description,
-        model: furniture.model3D
+        models: furniture.models
       }
     }
   });

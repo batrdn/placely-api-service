@@ -10,7 +10,7 @@ export const getFurnitureById = async (parent: any, args: any) => {
         image: furniture.image,
         isPublished: furniture.isPublished,
         description: furniture.description,
-        model: furniture.model3D
+        models: furniture.models
       }
     }
 

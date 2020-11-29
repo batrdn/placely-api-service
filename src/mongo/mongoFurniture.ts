@@ -11,10 +11,13 @@ export enum FurnitureType {
 export interface IFurniture extends Document{
   name: string;
   type: FurnitureType;
+  price: number;
+  code: string;
+  count: number,
   image: string;
   isPublished: boolean;
   description: string;
-  model3D: string;
+  models: string[];
 }
 
 const FurnitureSchema = new Schema({
@@ -26,8 +29,16 @@ const FurnitureSchema = new Schema({
     type: FurnitureType,
     required: true
   },
-  image: {
+  price: {
+    type: Number,
+    required: true
+  },
+  code: {
     type: String,
+    required: true
+  },
+  count: {
+    type: Number,
     required: true
   },
   isPublished: {
@@ -38,8 +49,12 @@ const FurnitureSchema = new Schema({
     type: String,
     required: false
   },
-  model3D: {
+  image: {
     type: String,
+    required: false
+  },
+  models: {
+    type: Array,
     required: false
   }
 });
