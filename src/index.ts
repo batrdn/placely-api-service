@@ -13,6 +13,7 @@ import schemas from './schema/schemas';
 import {uploadFurnitureImage} from './usecase/uploadFurnitureImage';
 import {fetchImage} from './usecase/fetchImage';
 import {upload3DModel} from './usecase/upload3DModel';
+import {fetchFile} from './usecase/fetchFile';
 
 const GridFsStorage = require('multer-gridfs-storage');
 const cors = require('cors');
@@ -40,6 +41,7 @@ const storage = new GridFsStorage({
         const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
+          metadata: file.originalname,
           bucketName: 'uploads'
         };
         resolve(fileInfo);
@@ -62,6 +64,7 @@ const startServer = async () => {
   app.post('/placely/upload-furniture-image', upload.single('image'), uploadFurnitureImage);
   app.post('/placely/upload-3d-model', upload.single('model'), upload3DModel);
   app.get('/placely/images/:imageName', fetchImage);
+  app.get('/placely/files/:fileName', fetchFile);
 
   app.listen({port: 4000}, () => console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
 };
